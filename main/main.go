@@ -9,13 +9,19 @@ import (
 
 func main() {
 
-	http.HandleFunc("/double", doubleHandler)
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", handler())
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
+}
+
+func handler() http.Handler {
+
+	r := http.NewServeMux()
+	r.HandleFunc("/double", doubleHandler)
+	return r
 }
 
 func doubleHandler(w http.ResponseWriter, r *http.Request) {
